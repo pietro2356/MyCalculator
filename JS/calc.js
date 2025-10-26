@@ -14,6 +14,10 @@ allBtn.forEach((btn) => {
     btn.addEventListener("click", operate);
 });
 
+/**
+ * Esegue l'operazione selezionata
+ * @param event Evento di click sul bottone
+ */
 function operate(event){
     let operator = event.target.id;
     let a = parseFloat(val1.value);
@@ -37,6 +41,13 @@ function operate(event){
 }
 
 
+/**
+ * Esegue l'operazione in base all'operatore
+ * @param operator - operatore selezionato
+ * @param a - primo operando
+ * @param b - secondo operando
+ * @returns {Number|Error} - risultato dell'operazione o errore se operazione non valida
+ */
 function performOperation(operator, a, b){
     switch(operator){
         case "btn-op-sum":
