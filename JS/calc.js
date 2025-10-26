@@ -32,7 +32,6 @@ function operate(event){
     }
 
     if (!isNaN(result)) {
-        let r = 0;
         result = result.toFixed(4);
     }
 
