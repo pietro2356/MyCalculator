@@ -113,10 +113,12 @@ function sottrazione(a,b){
  * Divide due numeri
  * @param a {number} - dividendo
  * @param b {number} - divisore
- * @returns {number} - quoziente tra i due numeri
+ * @returns {number|Error} - quoziente tra i due numeri o errore se il divisore è zero
  */
 function divisione(a,b){
-    // FIXME: gestire divisione per zero
+    if (b === 0){
+        return Error("Divisione per zero non permessa");
+    }
     return a / b;
 }
 
