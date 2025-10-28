@@ -1,3 +1,7 @@
+import OperationError from "./errors/OperationError.js";
+import InvalidOperationError from "./errors/InvalidOperationError.js";
+import DivisionByZeroError from "./errors/DivisionByZeroError.js";
+
 let allBtn = document.querySelectorAll("button");
 
 let val1 = document.getElementById("val1");
@@ -148,48 +152,4 @@ function divisione(a,b){
  */
 function moltiplicazione(a,b){
     return a * b;
-}
-
-/**
- * Classe base per gli errori delle operazioni
- * deriva da Error
- *
- * @example
- * throw new OperationError("Messaggio di errore");
- *
- * @see README.md - Gestione degli errori con classi personalizzate
- */
-class OperationError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = "OperationError";
-    }
-}
-
-/**
- * Classe per l'errore di divisione per zero
- * deriva da OperationError
- * @example
- * throw new DivisionByZeroError();
- * @see README.md - Gestione degli errori con classi personalizzate
- */
-class DivisionByZeroError extends OperationError {
-    constructor() {
-        super("Divisione per zero non permessa");
-        this.name = "DivisionByZeroError";
-    }
-}
-
-/**
- * Classe per l'errore di operazione non valida
- * deriva da OperationError
- * @example
- * throw new InvalidOperationError();
- * @see README.md - Gestione degli errori con classi personalizzate
- */
-class InvalidOperationError extends OperationError {
-    constructor() {
-        super("Operazione non valida");
-        this.name = "InvalidOperationError";
-    }
 }
