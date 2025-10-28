@@ -26,7 +26,15 @@ allBtn.forEach((btn) => {
 
         let res = performOperation(a, b, operation);
 
-        if (res instanceof InvalidOperationError){
+        /**
+         * In questo caso controlliamo se il risultato è un'istanza di OperationError
+         *
+         * Controllare direttamente OperationError ci permette di gestire tutti gli errori derivati
+         *  senza dover fare un controllo per ogni tipo di errore specifico DivisionByZeroError, InvalidOperationError, ecc.
+         *
+         *  @see README.md - Gestione degli errori con classi personalizzate
+         */
+        if (res instanceof OperationError){
             result.innerText = "Error: " + res.message;
         }else{
             result.innerText = "Result: " + res;
@@ -52,7 +60,11 @@ allBtn.forEach((btn) => {
  * @param a {number}
  * @param b {number}
  * @param operation {string} L'operazione da eseguire: + - / *
- * @returns {number|InvalidOperationError}
+ * @returns {number|OperationError} - il risultato dell'operazione o un errore se l'operazione non è valida
+ * @example
+ * performOperation(5, 3, "+") // ritorna 8
+ * performOperation(5, 0, "/") // ritorna DivisionByZeroError (OperationError)
+ * performOperation(5, 3, "%") // ritorna InvalidOperationError (OperationError)
  */
 function performOperation(a, b, operation){
     switch (operation) {
@@ -65,12 +77,18 @@ function performOperation(a, b, operation){
         case "*":
             return moltiplicazione(a,b);
         default:
-            return InvalidOperationError();
+            return new InvalidOperationError();
     }
 }
 
 /**
  * Classe per memorizzare un'operazione eseguita
+ * @param {number} val1 - primo valore
+ * @param {number} val2 - secondo valore
+ * @param {string} operation - operazione eseguita
+ * @example
+ * let log = new Log(5, 3, "+");
+ * log.fnLoad(); // carica i valori 5 e 3 nei campi di input
  */
 class Log {
     constructor(a, b, operation){
@@ -113,11 +131,11 @@ function sottrazione(a,b){
  * Divide due numeri
  * @param a {number} - dividendo
  * @param b {number} - divisore
- * @returns {number|Error} - quoziente tra i due numeri o errore se il divisore è zero
+ * @returns {number|DivisionByZeroError} - quoziente tra i due numeri o errore se il divisore è zero
  */
 function divisione(a,b){
     if (b === 0){
-        return DivisionByZeroError();
+        return new DivisionByZeroError();
     }
     return a / b;
 }
@@ -132,6 +150,15 @@ function moltiplicazione(a,b){
     return a * b;
 }
 
+/**
+ * Classe base per gli errori delle operazioni
+ * deriva da Error
+ *
+ * @example
+ * throw new OperationError("Messaggio di errore");
+ *
+ * @see README.md - Gestione degli errori con classi personalizzate
+ */
 class OperationError extends Error {
     constructor(message) {
         super(message);
@@ -139,6 +166,13 @@ class OperationError extends Error {
     }
 }
 
+/**
+ * Classe per l'errore di divisione per zero
+ * deriva da OperationError
+ * @example
+ * throw new DivisionByZeroError();
+ * @see README.md - Gestione degli errori con classi personalizzate
+ */
 class DivisionByZeroError extends OperationError {
     constructor() {
         super("Divisione per zero non permessa");
@@ -146,6 +180,13 @@ class DivisionByZeroError extends OperationError {
     }
 }
 
+/**
+ * Classe per l'errore di operazione non valida
+ * deriva da OperationError
+ * @example
+ * throw new InvalidOperationError();
+ * @see README.md - Gestione degli errori con classi personalizzate
+ */
 class InvalidOperationError extends OperationError {
     constructor() {
         super("Operazione non valida");
