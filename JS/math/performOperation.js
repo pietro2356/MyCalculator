@@ -1,5 +1,6 @@
-import InvalidOperationError from "./errors/InvalidOperationError.js";
-import {divisione, moltiplicazione, somma, sottrazione} from "./math/BasicMath.js";
+import {divisione, moltiplicazione, somma, sottrazione} from "./BasicMath.js";
+import InvalidOperationError from "../errors/InvalidOperationError.js";
+
 
 /**
  * Esegue l'operazione tra a e b
