@@ -1,5 +1,6 @@
 import OperationError from "./errors/OperationError.js";
-import performOperation from "./math/performOperation";
+import performOperation from "./math/performOperation.js";
+import Log from "./log/Log.js";
 
 
 let allBtn = document.querySelectorAll("button");
@@ -43,7 +44,14 @@ allBtn.forEach((btn) => {
         }else{
             result.innerText = "Result: " + res;
 
-            let myLog = new Log(a, b, operation);
+            /**
+                Istanziando un nuovo Log, passo i parametri necessari per la creazione del log.
+                In particolare passo anche i riferimenti HTML ai campi di input val1 e val2,
+                in modo che il metodo fnLoad possa funzionare correttamente.
+
+                @see Log.js - Classe Log
+             */
+            let myLog = new Log(a, b, operation, val1, val2);
 
             let btnLoad = document.createElement("button");
             btnLoad.innerText = "LOAD";
@@ -58,29 +66,3 @@ allBtn.forEach((btn) => {
         console.log(res);
     });
 });
-
-/**
- * Classe per memorizzare un'operazione eseguita
- * @param {number} val1 - primo valore
- * @param {number} val2 - secondo valore
- * @param {string} operation - operazione eseguita
- * @example
- * let log = new Log(5, 3, "+");
- * log.fnLoad(); // carica i valori 5 e 3 nei campi di input
- */
-class Log {
-    constructor(a, b, operation){
-        this.val1 = a;
-        this.val2 = b;
-        this.operation = operation;
-    }
-
-    /**
-     * Carica i valori memorizzati nei campi di ingresso
-     */
-    fnLoad = () => {
-        console.table({val1: this.val1, val2: this.val2});
-        val1.value = this.val1;
-        val2.value = this.val2;
-    }
-}
