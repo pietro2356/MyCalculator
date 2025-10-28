@@ -26,7 +26,7 @@ allBtn.forEach((btn) => {
 
         let res = performOperation(a, b, operation);
 
-        if (res instanceof Error){
+        if (res instanceof InvalidOperationError){
             result.innerText = "Error: " + res.message;
         }else{
             result.innerText = "Result: " + res;
@@ -52,7 +52,7 @@ allBtn.forEach((btn) => {
  * @param a {number}
  * @param b {number}
  * @param operation {string} L'operazione da eseguire: + - / *
- * @returns {number|Error}
+ * @returns {number|InvalidOperationError}
  */
 function performOperation(a, b, operation){
     switch (operation) {
@@ -65,7 +65,7 @@ function performOperation(a, b, operation){
         case "*":
             return moltiplicazione(a,b);
         default:
-            return Error("Operazione non valida");
+            return InvalidOperationError();
     }
 }
 
@@ -117,7 +117,7 @@ function sottrazione(a,b){
  */
 function divisione(a,b){
     if (b === 0){
-        return Error("Divisione per zero non permessa");
+        return DivisionByZeroError();
     }
     return a / b;
 }
@@ -130,4 +130,25 @@ function divisione(a,b){
  */
 function moltiplicazione(a,b){
     return a * b;
+}
+
+class OperationError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = "OperationError";
+    }
+}
+
+class DivisionByZeroError extends OperationError {
+    constructor() {
+        super("Divisione per zero non permessa");
+        this.name = "DivisionByZeroError";
+    }
+}
+
+class InvalidOperationError extends OperationError {
+    constructor() {
+        super("Operazione non valida");
+        this.name = "InvalidOperationError";
+    }
 }
