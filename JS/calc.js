@@ -31,7 +31,7 @@ allBtn.forEach((btn) => {
         }else{
             result.innerText = "Result: " + res;
 
-            let myLog = new MyLog(a, b, operation);
+            let myLog = new Log(a, b, operation);
 
             let btnLoad = document.createElement("button");
             btnLoad.innerText = "LOAD";
@@ -69,13 +69,21 @@ function performOperation(a, b, operation){
     }
 }
 
-function MyLog(a, b, operation){
-    this.val1 = a;
-    this.val2 = b;
-    this.operation = operation;
+/**
+ * Classe per memorizzare un'operazione eseguita
+ */
+class Log {
+    constructor(a, b, operation){
+        this.val1 = a;
+        this.val2 = b;
+        this.operation = operation;
+    }
 
-    this.fnLoad = () => {
-        console.log("LOAD", this.val1, this.val2);
+    /**
+     * Carica i valori memorizzati nei campi di ingresso
+     */
+    fnLoad = () => {
+        console.table({val1: this.val1, val2: this.val2});
         val1.value = this.val1;
         val2.value = this.val2;
     }
